@@ -16,7 +16,7 @@ OK, let's focus on our topic.
 
 We use Maven to build our project and manage all dependencies, the dependencies we need are:
 
-{% highlight xml %}
+```xml
 <!-- unit test dependencies begin -->
 <dependency>
  <groupId>junit</groupId>
@@ -66,4 +66,4 @@ We use Maven to build our project and manage all dependencies, the dependencies 
  <scope>test</scope>
 </dependency>
 <!-- unit test dependencies end -->
-{% endhighlight %}
+```
