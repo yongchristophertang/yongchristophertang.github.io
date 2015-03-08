@@ -67,3 +67,4 @@ We use Maven to build our project and manage all dependencies, the dependencies 
 </dependency>
 <!-- unit test dependencies end -->
 ```
+We will elaborate in next posts.
