@@ -4,7 +4,7 @@ title: How to perform unit testing for resteasy-spring web application
 tags: unit-testing spring resteasy
 ---
 
-Resteasy is a framework that provides capability to build Restful web services and Restful java applications, which can be deployed in any servlet containers. Spring itself is a prevailed well-known IOC framework in the java world. While under the name of spring, there developed a bunch of java frameworks that could facilitate the build of web services, the connection and operation on persistences, or some common purposes like security. Resteasy officially provides the integration to spring and spring mvc frameworks to smooth the usage for spring developers.
+Resteasy is a framework that provides capability to build Restful web services and Restful java applications, which can be deployed in any servlet containers. Spring itself is a prevailed well-known IOC framework in the java world. Resteasy officially provides the integration to spring and spring mvc frameworks to smooth the usage for spring developers.
 
 In a simple way, resteasy can be considered a mvc web framework which provides us restful web services. Therefore, resteasy can be mapped to another MVC framework, say spring mvc, in order to leverage the power of the spring world. We will not talk about a lot about resteasy or spring detailed in this post, please refer to their official websites for more information: [resteasy](http://resteasy.jboss.org/) and [spring](http://spring.io).
 
