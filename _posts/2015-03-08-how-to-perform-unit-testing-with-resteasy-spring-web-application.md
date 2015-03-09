@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How to perform unit testing for resteasy-spring web application
+title: How to perform unit testing for resteasy-spring web application (1)
 tags: unit-testing spring resteasy
 ---
 
@@ -67,4 +67,60 @@ We use Maven to build our project and manage all dependencies, the dependencies 
 </dependency>
 <!-- unit test dependencies end -->
 ```
-We will elaborate in next posts.
+## Unit test for a 'normal' class
+From a MVC view, a web application should be composed by model, view and controller parts. In this post we regard a non-controller class as a normal class, because unit testing it requires no boot-up of spring, thus with less complexity and configurations.
+
+Here is an example filter class which examines the "token" parameter in the header. If the token is blank, the filter method throws an IllegalArgumentException, else the token is against validation by the injected Authorizable instance:
+
+```java
+@Provider
+@Component
+public class AccessTokenFilter implements ContainerRequestFilter {
+    public static final String TOKEN_NAME = "token";
+
+    @Autowired
+    private Authorizable authorizer;
+
+    @Override
+    public void filter(ContainerRequestContext requestContext) throws IOException {
+
+        String token = requestContext.getHeaderString(TOKEN_NAME);
+
+        Validate.isTrue(StringUtils.isNotBlank(token), "token cannot be blank");
+
+        authorizer.authorize(token);
+    }
+}
+```
+In order to cover all circumstances, we should prepare two test cases, one is with non-blank token while another is blank. Here we should be noticed that the validation of token is not necessary in this unit test, which actually shall be covered in testing of Authorizable class.
+
+In unit testing, it is well known that we do not need to run the tested class in a reality environment. Therefore, the technique of mocking is introduced to focus our testing on the tested class solely. In this example, we have one dependency, authorizer, and one input instance, requestContext that both need to be mocked. The following is an examplary test case with non-blank token:
+
+```java
+@RunWith(MockitoJUnitRunner.class)
+public class AccessTokenFilterTest {
+	@InjectMocks
+	private AccessTokenFilter filter;
+
+	@Mock
+	private Authorizable authorizer;
+
+	@Mock
+    private ContainerRequestContext crc;
+
+    @Before
+    private void setUp() {
+    	reset(crc);
+    }
+
+    @Test
+    private void testFilter_TokenIsNonBlank_ShouldProceedTokenToAuthorizer() {
+    	when(crc.getHeaderString(AccessTokenFilter.TOKEN_NAME)).thenReturn("valid");
+
+    	filter.filter(crc);
+
+    	verify(authorizer).authorize("valid");
+    }
+}
+```
+In next part, we will talk about how to unit test a controller class.
