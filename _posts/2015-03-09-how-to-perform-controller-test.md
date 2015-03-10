@@ -2,6 +2,7 @@
 layout: post
 title: How to perform unit testing for resteasy-spring web application (2) - controller test
 tags: unit-testing spring resteasy
+excerpt: In the second part of the unit testing series, we elaborate on doing unit test for controller class in a web application.
 ---
 
 In previous part of this post, we have discussed how to do a unit test for a 'normal' class. Now let's take a step forward to see how a controller test would be. The controller test will much more complicated than the 'normal' peers.
